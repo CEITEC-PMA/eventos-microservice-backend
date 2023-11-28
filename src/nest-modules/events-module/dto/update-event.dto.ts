@@ -1,4 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateEventDto } from './create-event.dto';
+import { UpdateEventInput } from '@core/event/application/updateEvent/updateEventInput';
+import { OmitType } from '@nestjs/mapped-types';
 
-export class UpdateEventDto extends PartialType(CreateEventDto) {}
+export class UpdateEventInputWithoutId extends OmitType(UpdateEventInput, [
+  'id',
+] as const) {}
+
+export class UpdateEventDto extends UpdateEventInputWithoutId {}
