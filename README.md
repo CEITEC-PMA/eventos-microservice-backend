@@ -2,6 +2,8 @@
 
 O microserviço de Eventos é um backend dedicado à gestão e criação de eventos. Trata-se de um projeto de código aberto desenvolvido para atender às necessidades da prefeitura de Anápolis. Seu objetivo principal é proporcionar à população um serviço eficaz, buscando otimizar recursos financeiros ao máximo.
 
+Desenvolvido com base na metodologia DDD (Domain-Driven Design), este sistema incorpora os princípios e práticas do curso FullCycle, sob a orientação do professor Luiz Carlos, cujos ensinamentos podem ser encontrados em seu repositório GitHub: [Luiz Carlos](https://github.com/argentinaluiz)
+
 ## Stay in touch
 
 - Author - [Adriano Barosa](https://www.adrianobarbosa.dev.br/)
