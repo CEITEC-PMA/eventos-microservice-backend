@@ -12,8 +12,9 @@ services:
   db:
     image: mysql:8.0.30-debian
     environment:
-      - MYSQL_DATABASE=micro_videos
+      - MYSQL_DATABASE=micro-eventos
       - MYSQL_ROOT_PASSWORD=root
+    # caso queira usar mais de um banco, tipo db dev e db production
     # volumes:
     #   - ./.docker/mysql:/docker-entrypoint-initdb.d
     tmpfs:
