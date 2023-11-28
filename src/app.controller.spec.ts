@@ -16,7 +16,11 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(appController.getHello()).toStrictEqual({
+        api: 'micro-eventos-backend',
+        version: '0.0.1',
+        port: 3000,
+      });
     });
   });
 });

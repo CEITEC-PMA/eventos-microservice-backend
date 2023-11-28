@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DatabaseModule } from '../database/database.module';
+import { DatabaseModule } from '../database-module/database.module';
 import { EventsController } from './events.controller';
 import { EventsModule } from './events.module';
 
