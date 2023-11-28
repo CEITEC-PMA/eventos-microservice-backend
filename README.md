@@ -2,6 +2,10 @@
 
 O microserviço de Eventos é um backend dedicado à gestão e criação de eventos. Trata-se de um projeto de código aberto desenvolvido para atender às necessidades da prefeitura de Anápolis. Seu objetivo principal é proporcionar à população um serviço eficaz, buscando otimizar recursos financeiros ao máximo.
 
+## Stay in touch
+
+- Author - [Adriano Barosa](https://www.adrianobarbosa.dev.br/) [Git](https://github.com/adrianobarbosa1)
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
