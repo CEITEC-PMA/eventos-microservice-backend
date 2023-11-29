@@ -5,7 +5,7 @@ import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { EntityValidationError } from '@core/shared/domain/validators/validation.error';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { EventOutput, EventOutputMapper } from '../commom/eventOutput';
-import { UpdateEventInput } from './updateEventInput';
+import { UpdateEventInput } from './updateEvent.input';
 
 export class UpdateEventUseCase
   implements IUseCase<UpdateEventInput, UpdateEventOutput>

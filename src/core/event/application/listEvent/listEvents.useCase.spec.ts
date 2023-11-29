@@ -1,8 +1,8 @@
 import { Event } from '@core/event/domain/eventEntity';
 import { EventSearchResult } from '@core/event/domain/eventRepository';
-import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemoryRepository';
+import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
 import { EventOutputMapper } from '../commom/eventOutput';
-import { ListEventsUseCase } from './listEventsUseCase';
+import { ListEventsUseCase } from './listEvents.useCase';
 
 describe('ListEventssUseCase Unit Tests', () => {
   let useCase: ListEventsUseCase;

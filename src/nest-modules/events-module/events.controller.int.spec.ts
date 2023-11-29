@@ -1,15 +1,25 @@
-import { CreateEventUseCase } from '@core/event/application/createEvent/createEventUseCase';
-import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEventUseCase';
-import { GetEventUseCase } from '@core/event/application/getEvent/getEventUseCase';
-import { ListEventsUseCase } from '@core/event/application/listEvent/listEventsUseCase';
-import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEventUseCase';
+import { EventOutputMapper } from '@core/event/application/commom/eventOutput';
+
+import { CreateEventUseCase } from '@core/event/application/createEvent/createEvent.useCase';
+import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEvent.useCase';
+import { GetEventUseCase } from '@core/event/application/getEvent/getEvent.useCase';
+import { ListEventsUseCase } from '@core/event/application/listEvent/listEvents.useCase';
+import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEvent.useCase';
+import { Event } from '@core/event/domain/eventEntity';
 import { IEventRepository } from '@core/event/domain/eventRepository';
+import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '../config-module/config.module';
 import { DatabaseModule } from '../database-module/database.module';
 import { EventsController } from './events.controller';
 import { EventsModule } from './events.module';
+import { EventCollectionPresenter, EventPresenter } from './events.presenter';
 import { EVENT_PROVIDERS } from './events.providers';
+import {
+  CreateEventFixture,
+  ListEventsFixture,
+  UpdateEventFixture,
+} from './testing/category-fixture';
 
 describe('EventsController Integration Tests', () => {
   let controller: EventsController;
@@ -40,78 +50,75 @@ describe('EventsController Integration Tests', () => {
       'when body is $send_data',
       async ({ send_data, expected }) => {
         const presenter = await controller.create(send_data);
-        const entity = await repository.findById(new CategoryId(presenter.id));
+        const entity = await repository.findById(new Uuid(presenter.id));
         expect(entity!.toJSON()).toStrictEqual({
-          category_id: presenter.id,
-          created_at: presenter.created_at,
+          eventId: presenter.id,
+          createdAt: presenter.createdAt,
           ...expected,
         });
-        const output = CategoryOutputMapper.toOutput(entity!);
-        expect(presenter).toEqual(new CategoryPresenter(output));
+        const output = EventOutputMapper.toOutput(entity!);
+        expect(presenter).toEqual(new EventPresenter(output));
       },
     );
   });
 
-  describe('should update a category', () => {
-    const arrange = UpdateCategoryFixture.arrangeForUpdate();
+  describe('should update a Event', () => {
+    const arrange = UpdateEventFixture.arrangeForUpdate();
 
-    const category = Category.fake().aCategory().build();
+    const event = Event.fake().aEvent().build();
 
     beforeEach(async () => {
-      await repository.insert(category);
+      await repository.insert(event);
     });
 
     test.each(arrange)(
       'when body is $send_data',
       async ({ send_data, expected }) => {
-        const presenter = await controller.update(
-          category.category_id.id,
-          send_data,
-        );
-        const entity = await repository.findById(new CategoryId(presenter.id));
+        const presenter = await controller.update(event.eventId.id, send_data);
+        const entity = await repository.findById(new Uuid(presenter.id));
         expect(entity!.toJSON()).toStrictEqual({
-          category_id: presenter.id,
-          created_at: presenter.created_at,
-          name: expected.name ?? category.name,
+          eventId: presenter.id,
+          createdAt: presenter.createdAt,
+          name: expected.name ?? event.name,
           description:
             'description' in expected
               ? expected.description
-              : category.description,
+              : event.description,
           is_active:
             expected.is_active === true || expected.is_active === false
               ? expected.is_active
-              : category.is_active,
+              : event.is_active,
         });
-        const output = CategoryOutputMapper.toOutput(entity!);
-        expect(presenter).toEqual(new CategoryPresenter(output));
+        const output = EventOutputMapper.toOutput(entity!);
+        expect(presenter).toEqual(new EventPresenter(output));
       },
     );
   });
 
-  it('should delete a category', async () => {
-    const category = Category.fake().aCategory().build();
-    await repository.insert(category);
-    const response = await controller.remove(category.category_id.id);
+  it('should delete a Event', async () => {
+    const event = Event.fake().aEvent().build();
+    await repository.insert(event);
+    const response = await controller.remove(event.eventId.id);
     expect(response).not.toBeDefined();
-    await expect(repository.findById(category.category_id)).resolves.toBeNull();
+    await expect(repository.findById(event.eventId)).resolves.toBeNull();
   });
 
-  it('should get a category', async () => {
-    const category = Category.fake().aCategory().build();
-    await repository.insert(category);
-    const presenter = await controller.findOne(category.category_id.id);
+  it('should get a Event', async () => {
+    const event = Event.fake().aEvent().build();
+    await repository.insert(event);
+    const presenter = await controller.findOne(event.eventId.id);
 
-    expect(presenter.id).toBe(category.category_id.id);
-    expect(presenter.name).toBe(category.name);
-    expect(presenter.description).toBe(category.description);
-    expect(presenter.is_active).toBe(category.is_active);
-    expect(presenter.created_at).toStrictEqual(category.created_at);
+    expect(presenter.id).toBe(event.eventId.id);
+    expect(presenter.name).toBe(event.name);
+    expect(presenter.description).toBe(event.description);
+    expect(presenter.is_active).toBe(event.is_active);
+    expect(presenter.createdAt).toStrictEqual(event.createdAt);
   });
 
   describe('search method', () => {
-    describe('should sorted categories by created_at', () => {
+    describe('should sorted categories by createdAt', () => {
       const { entitiesMap, arrange } =
-        ListCategoriesFixture.arrangeIncrementedWithCreatedAt();
+        ListEventsFixture.arrangeIncrementedWithCreatedAt();
 
       beforeEach(async () => {
         await repository.bulkInsert(Object.values(entitiesMap));
@@ -123,8 +130,8 @@ describe('EventsController Integration Tests', () => {
           const presenter = await controller.search(send_data);
           const { entities, ...paginationProps } = expected;
           expect(presenter).toEqual(
-            new CategoryCollectionPresenter({
-              items: entities.map(CategoryOutputMapper.toOutput),
+            new EventCollectionPresenter({
+              items: entities.map(EventOutputMapper.toOutput),
               ...paginationProps.meta,
             }),
           );
@@ -133,7 +140,7 @@ describe('EventsController Integration Tests', () => {
     });
 
     describe('should return categories using pagination, sort and filter', () => {
-      const { entitiesMap, arrange } = ListCategoriesFixture.arrangeUnsorted();
+      const { entitiesMap, arrange } = ListEventsFixture.arrangeUnsorted();
 
       beforeEach(async () => {
         await repository.bulkInsert(Object.values(entitiesMap));
@@ -145,8 +152,8 @@ describe('EventsController Integration Tests', () => {
           const presenter = await controller.search(send_data);
           const { entities, ...paginationProps } = expected;
           expect(presenter).toEqual(
-            new CategoryCollectionPresenter({
-              items: entities.map(CategoryOutputMapper.toOutput),
+            new EventCollectionPresenter({
+              items: entities.map(EventOutputMapper.toOutput),
               ...paginationProps.meta,
             }),
           );

@@ -3,7 +3,7 @@ import { LoadEntityError } from '@core/shared/domain/validators/validation.error
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { EventModel } from './eventModel';
-import { EventModelMapper } from './eventModelMapper';
+import { EventModelMapper } from './eventModel.mapper';
 
 describe('EventModelMapper Integration Tests', () => {
   setupSequelize({ models: [EventModel] });

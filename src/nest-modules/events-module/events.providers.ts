@@ -1,12 +1,12 @@
-import { CreateEventUseCase } from '@core/event/application/createEvent/createEventUseCase';
-import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEventUseCase';
-import { GetEventUseCase } from '@core/event/application/getEvent/getEventUseCase';
-import { ListEventsUseCase } from '@core/event/application/listEvent/listEventsUseCase';
-import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEventUseCase';
+import { CreateEventUseCase } from '@core/event/application/createEvent/createEvent.useCase';
+import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEvent.useCase';
+import { GetEventUseCase } from '@core/event/application/getEvent/getEvent.useCase';
+import { ListEventsUseCase } from '@core/event/application/listEvent/listEvents.useCase';
+import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEvent.useCase';
 import { IEventRepository } from '@core/event/domain/eventRepository';
-import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemoryRepository';
+import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
-import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelizeRepository';
+import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { getModelToken } from '@nestjs/sequelize';
 
 export const REPOSITORIES = {

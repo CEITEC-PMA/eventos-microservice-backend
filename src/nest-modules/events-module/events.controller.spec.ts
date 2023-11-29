@@ -1,8 +1,8 @@
-import { CreateEventOutput } from '@core/event/application/createEvent/createEventUseCase';
-import { GetEventOutput } from '@core/event/application/getEvent/getEventUseCase';
-import { ListEventsOutput } from '@core/event/application/listEvent/listEventsUseCase';
-import { UpdateEventInput } from '@core/event/application/updateEvent/updateEventInput';
-import { UpdateEventOutput } from '@core/event/application/updateEvent/updateEventUseCase';
+import { CreateEventOutput } from '@core/event/application/createEvent/createEvent.useCase';
+import { GetEventOutput } from '@core/event/application/getEvent/getEvent.useCase';
+import { ListEventsOutput } from '@core/event/application/listEvent/listEvents.useCase';
+import { UpdateEventInput } from '@core/event/application/updateEvent/updateEvent.input';
+import { UpdateEventOutput } from '@core/event/application/updateEvent/updateEvent.useCase';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
 import { CreateEventDto } from './dto/create-event.dto';
 import { EventsController } from './events.controller';

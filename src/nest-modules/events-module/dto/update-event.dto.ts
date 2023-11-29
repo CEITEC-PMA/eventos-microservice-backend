@@ -1,4 +1,4 @@
-import { UpdateEventInput } from '@core/event/application/updateEvent/updateEventInput';
+import { UpdateEventInput } from '@core/event/application/updateEvent/updateEvent.input';
 import { OmitType } from '@nestjs/mapped-types';
 
 export class UpdateEventInputWithoutId extends OmitType(UpdateEventInput, [

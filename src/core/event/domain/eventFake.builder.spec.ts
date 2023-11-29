@@ -1,6 +1,6 @@
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Chance } from 'chance';
-import { EventFakeBuilder } from './eventFakeBuilder';
+import { EventFakeBuilder } from './eventFake.builder';
 
 describe('EventFakerBuilder Unit Tests', () => {
   describe('eventId prop', () => {

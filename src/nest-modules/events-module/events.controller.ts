@@ -1,9 +1,10 @@
 import { EventOutput } from '@core/event/application/commom/eventOutput';
-import { CreateEventUseCase } from '@core/event/application/createEvent/createEventUseCase';
-import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEventUseCase';
-import { GetEventUseCase } from '@core/event/application/getEvent/getEventUseCase';
-import { ListEventsUseCase } from '@core/event/application/listEvent/listEventsUseCase';
-import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEventUseCase';
+
+import { CreateEventUseCase } from '@core/event/application/createEvent/createEvent.useCase';
+import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEvent.useCase';
+import { GetEventUseCase } from '@core/event/application/getEvent/getEvent.useCase';
+import { ListEventsUseCase } from '@core/event/application/listEvent/listEvents.useCase';
+import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEvent.useCase';
 import {
   Body,
   Controller,

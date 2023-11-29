@@ -1,7 +1,7 @@
 import { Entity } from '../../shared/domain/entity';
 import { ValueObject } from '../../shared/domain/value-object';
 import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
-import { EventFakeBuilder } from './eventFakeBuilder';
+import { EventFakeBuilder } from './eventFake.builder';
 import { EventValidatorFactory } from './eventValidation';
 
 // export type EventConstructorProps = {

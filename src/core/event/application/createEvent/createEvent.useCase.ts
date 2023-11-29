@@ -3,7 +3,7 @@ import { IEventRepository } from '@core/event/domain/eventRepository';
 import { IUseCase } from '@core/shared/application/use-case.interface';
 import { EntityValidationError } from '@core/shared/domain/validators/validation.error';
 import { EventOutput, EventOutputMapper } from '../commom/eventOutput';
-import { CreateEventInput } from './createEventInput';
+import { CreateEventInput } from './createEvent.input';
 
 export class CreateEventUseCase
   implements IUseCase<CreateEventInput, CreateEventOutput>

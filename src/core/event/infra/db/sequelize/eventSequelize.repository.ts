@@ -10,7 +10,7 @@ import { SortDirection } from '@core/shared/domain/repository/search-params';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Op, literal } from 'sequelize';
 import { EventModel } from './eventModel';
-import { EventModelMapper } from './eventModelMapper';
+import { EventModelMapper } from './eventModel.mapper';
 
 export class EventSequelizeRepository implements IEventRepository {
   sortableFields: string[] = ['name', 'createdAt'];

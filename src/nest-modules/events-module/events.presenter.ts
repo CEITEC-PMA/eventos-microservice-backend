@@ -1,5 +1,5 @@
 import { EventOutput } from '@core/event/application/commom/eventOutput';
-import { ListEventsOutput } from '@core/event/application/listEvent/listEventsUseCase';
+import { ListEventsOutput } from '@core/event/application/listEvent/listEvents.useCase';
 import { Transform } from 'class-transformer';
 import { CollectionPresenter } from '../shared-module/collection.presenter';
 

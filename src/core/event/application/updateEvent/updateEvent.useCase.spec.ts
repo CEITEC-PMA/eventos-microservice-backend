@@ -1,58 +1,41 @@
 import { Event } from '@core/event/domain/eventEntity';
-import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemoryRepository';
+import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
+import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import {
-  InvalidUuidError,
-  Uuid,
-} from '@core/shared/domain/value-objects/uuid.vo';
-import { UpdateEventUseCase } from './updateEventUseCase';
+import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
+import { setupSequelize } from '@core/shared/infra/testing/helpers';
+import { UpdateEventUseCase } from './updateEvent.useCase';
 
-describe('UpdateEventUseCase Unit Tests', () => {
+describe('UpdateEventUseCase Integration Tests', () => {
   let useCase: UpdateEventUseCase;
-  let repository: EventInMemoryRepository;
+  let repository: EventSequelizeRepository;
+
+  setupSequelize({ models: [EventModel] });
 
   beforeEach(() => {
-    repository = new EventInMemoryRepository();
+    repository = new EventSequelizeRepository(EventModel);
     useCase = new UpdateEventUseCase(repository);
   });
 
   it('should throws error when entity not found', async () => {
-    await expect(() =>
-      useCase.execute({ id: 'fake id', name: 'fake' }),
-    ).rejects.toThrow(new InvalidUuidError());
-
     const eventId = new Uuid();
-
     await expect(() =>
       useCase.execute({ id: eventId.id, name: 'fake' }),
     ).rejects.toThrow(new NotFoundError(eventId.id, Event));
   });
 
-  it('should throw an error when aggregate is not valid', async () => {
-    const aggregate = new Event({ name: 'Movie' });
-    repository.items = [aggregate];
-    await expect(() =>
-      useCase.execute({
-        id: aggregate.eventId.id,
-        name: 't'.repeat(256),
-      }),
-    ).rejects.toThrow('Entity Validation Error');
-  });
-
   it('should update a EVENT', async () => {
-    const spyUpdate = jest.spyOn(repository, 'update');
-    const entity = new Event({ name: 'Movie' });
-    repository.items = [entity];
+    const entity = Event.fake().aEvent().build();
+    repository.insert(entity);
 
     let output = await useCase.execute({
       id: entity.eventId.id,
       name: 'test',
     });
-    expect(spyUpdate).toHaveBeenCalledTimes(1);
     expect(output).toStrictEqual({
       id: entity.eventId.id,
       name: 'test',
-      description: null,
+      description: entity.description,
       is_active: true,
       createdAt: entity.createdAt,
     });
@@ -145,13 +128,13 @@ describe('UpdateEventUseCase Unit Tests', () => {
         input: {
           id: entity.eventId.id,
           name: 'test',
-          description: 'some description',
+          description: null,
           is_active: false,
         },
         expected: {
           id: entity.eventId.id,
           name: 'test',
-          description: 'some description',
+          description: null,
           is_active: false,
           createdAt: entity.createdAt,
         },
@@ -161,16 +144,24 @@ describe('UpdateEventUseCase Unit Tests', () => {
     for (const i of arrange) {
       output = await useCase.execute({
         id: i.input.id,
-        ...('name' in i.input && { name: i.input.name }),
+        ...(i.input.name && { name: i.input.name }),
         ...('description' in i.input && { description: i.input.description }),
         ...('is_active' in i.input && { is_active: i.input.is_active }),
       });
+      const entityUpdated = await repository.findById(new Uuid(i.input.id));
       expect(output).toStrictEqual({
         id: entity.eventId.id,
         name: i.expected.name,
         description: i.expected.description,
         is_active: i.expected.is_active,
-        createdAt: entity.createdAt,
+        createdAt: entityUpdated!.createdAt,
+      });
+      expect(entityUpdated!.toJSON()).toStrictEqual({
+        eventId: entity.eventId.id,
+        name: i.expected.name,
+        description: i.expected.description,
+        is_active: i.expected.is_active,
+        createdAt: entityUpdated!.createdAt,
       });
     }
   });

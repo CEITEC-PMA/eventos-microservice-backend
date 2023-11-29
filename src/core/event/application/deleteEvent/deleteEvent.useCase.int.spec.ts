@@ -1,20 +1,20 @@
 import { Event } from '@core/event/domain/eventEntity';
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
-import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelizeRepository';
+import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
-import { GetEventUseCase } from './getEventUseCase';
+import { DeleteEventUseCase } from './deleteEvent.useCase';
 
-describe('GetCategoryUseCase Integration Tests', () => {
-  let useCase: GetEventUseCase;
+describe('DeleteEventUseCase Integration Tests', () => {
+  let useCase: DeleteEventUseCase;
   let repository: EventSequelizeRepository;
 
   setupSequelize({ models: [EventModel] });
 
   beforeEach(() => {
     repository = new EventSequelizeRepository(EventModel);
-    useCase = new GetEventUseCase(repository);
+    useCase = new DeleteEventUseCase(repository);
   });
 
   it('should throws error when entity not found', async () => {
@@ -24,16 +24,12 @@ describe('GetCategoryUseCase Integration Tests', () => {
     );
   });
 
-  it('should returns a category', async () => {
+  it('should delete a category', async () => {
     const event = Event.fake().aEvent().build();
     await repository.insert(event);
-    const output = await useCase.execute({ id: event.eventId.id });
-    expect(output).toStrictEqual({
+    await useCase.execute({
       id: event.eventId.id,
-      name: event.name,
-      description: event.description,
-      is_active: event.is_active,
-      createdAt: event.createdAt,
     });
+    await expect(repository.findById(event.eventId)).resolves.toBeNull();
   });
 });

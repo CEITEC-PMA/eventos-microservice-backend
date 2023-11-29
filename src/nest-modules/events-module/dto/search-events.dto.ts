@@ -1,4 +1,4 @@
-import { ListEventsInput } from '@core/event/application/listEvent/listEventsUseCase';
+import { ListEventsInput } from '@core/event/application/listEvent/listEvents.useCase';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
 
 export class SearchEventsDto implements ListEventsInput {

@@ -1,9 +1,9 @@
 import { Event } from '@core/event/domain/eventEntity';
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
-import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelizeRepository';
+import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { EventOutputMapper } from '../commom/eventOutput';
-import { ListEventsUseCase } from './listEventsUseCase';
+import { ListEventsUseCase } from './listEvents.useCase';
 
 describe('ListEventsUseCase Integration Tests', () => {
   let useCase: ListEventsUseCase;

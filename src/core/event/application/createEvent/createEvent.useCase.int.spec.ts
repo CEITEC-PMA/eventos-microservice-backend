@@ -1,8 +1,8 @@
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
-import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelizeRepository';
+import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
-import { CreateEventUseCase } from './createEventUseCase';
+import { CreateEventUseCase } from './createEvent.useCase';
 
 describe('CreateEventUseCase Integration Tests', () => {
   let useCase: CreateEventUseCase;

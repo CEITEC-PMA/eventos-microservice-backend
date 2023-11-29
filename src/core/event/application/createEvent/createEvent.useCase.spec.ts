@@ -1,5 +1,5 @@
-import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemoryRepository';
-import { CreateEventUseCase } from './createEventUseCase';
+import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
+import { CreateEventUseCase } from './createEvent.useCase';
 
 describe('CreateCategoryUseCase Unit Tests', () => {
   let useCase: CreateEventUseCase;

@@ -7,8 +7,8 @@ import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { EventModel } from './eventModel';
-import { EventModelMapper } from './eventModelMapper';
-import { EventSequelizeRepository } from './eventSequelizeRepository';
+import { EventModelMapper } from './eventModel.mapper';
+import { EventSequelizeRepository } from './eventSequelize.repository';
 
 describe('EventSequelizeRepository Integration Test', () => {
   let repository: EventSequelizeRepository;

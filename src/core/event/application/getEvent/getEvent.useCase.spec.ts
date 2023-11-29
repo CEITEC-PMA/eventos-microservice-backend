@@ -1,19 +1,19 @@
 import { Event } from '@core/event/domain/eventEntity';
-import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemoryRepository';
+import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import {
   InvalidUuidError,
   Uuid,
 } from '@core/shared/domain/value-objects/uuid.vo';
-import { DeleteEventUseCase } from './deleteEventUseCase';
+import { GetEventUseCase } from './getEvent.useCase';
 
-describe('DeleteEventUseCase Unit Tests', () => {
-  let useCase: DeleteEventUseCase;
+describe('GetEventUseCase Unit Tests', () => {
+  let useCase: GetEventUseCase;
   let repository: EventInMemoryRepository;
 
   beforeEach(() => {
     repository = new EventInMemoryRepository();
-    useCase = new DeleteEventUseCase(repository);
+    useCase = new GetEventUseCase(repository);
   });
 
   it('should throws error when entity not found', async () => {
@@ -22,18 +22,23 @@ describe('DeleteEventUseCase Unit Tests', () => {
     );
 
     const eventId = new Uuid();
-
     await expect(() => useCase.execute({ id: eventId.id })).rejects.toThrow(
       new NotFoundError(eventId.id, Event),
     );
   });
 
-  it('should delete a EVENT', async () => {
-    const items = [new Event({ name: 'test 1' })];
+  it('should returns a category', async () => {
+    const items = [Event.create({ name: 'Movie' })];
     repository.items = items;
-    await useCase.execute({
+    const spyFindById = jest.spyOn(repository, 'findById');
+    const output = await useCase.execute({ id: items[0].eventId.id });
+    expect(spyFindById).toHaveBeenCalledTimes(1);
+    expect(output).toStrictEqual({
       id: items[0].eventId.id,
+      name: 'Movie',
+      description: null,
+      is_active: true,
+      createdAt: items[0].createdAt,
     });
-    expect(repository.items).toHaveLength(0);
   });
 });
