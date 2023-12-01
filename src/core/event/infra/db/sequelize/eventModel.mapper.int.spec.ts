@@ -1,6 +1,5 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import { LoadEntityError } from '@core/shared/domain/validators/validation.error';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { EventModel } from './eventModel';
 import { EventModelMapper } from './eventModel.mapper';
@@ -43,7 +42,7 @@ describe('EventModelMapper Integration Tests', () => {
     const aggregate = EventModelMapper.toEntity(model);
     expect(aggregate.toJSON()).toStrictEqual(
       new Event({
-        eventId: new Uuid('5490020a-e866-4229-9adc-aa44b83234c4'),
+        eventId: new EventId('5490020a-e866-4229-9adc-aa44b83234c4'),
         name: 'some value',
         description: 'some description',
         is_active: true,

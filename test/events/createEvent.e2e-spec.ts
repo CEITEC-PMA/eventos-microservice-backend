@@ -1,6 +1,6 @@
 import { EventOutputMapper } from '@core/event/application/commom/eventOutput';
+import { EventId } from '@core/event/domain/eventEntity.aggregate';
 import { IEventRepository } from '@core/event/domain/eventRepository';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { instanceToPlain } from 'class-transformer';
 import request from 'supertest';
 import { EventsController } from '../../src/nest-modules/events-module/events.controller';
@@ -66,7 +66,7 @@ describe('EventsController (e2e)', () => {
           expect(Object.keys(res.body)).toStrictEqual(['data']);
           expect(Object.keys(res.body.data)).toStrictEqual(keysInResponse);
           const id = res.body.data.id;
-          const eventCreated = await eventRepo.findById(new Uuid(id));
+          const eventCreated = await eventRepo.findById(new EventId(id));
 
           const presenter = EventsController.serialize(
             EventOutputMapper.toOutput(eventCreated!),

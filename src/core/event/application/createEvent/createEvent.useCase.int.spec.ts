@@ -1,6 +1,6 @@
+import { EventId } from '@core/event/domain/eventEntity.aggregate';
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
 import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { CreateEventUseCase } from './createEvent.useCase';
 
@@ -17,7 +17,7 @@ describe('CreateEventUseCase Integration Tests', () => {
 
   it('should create a category', async () => {
     let output = await useCase.execute({ name: 'test' });
-    let entity = await repository.findById(new Uuid(output.id));
+    let entity = await repository.findById(new EventId(output.id));
     expect(output).toStrictEqual({
       id: entity!.eventId.id,
       name: 'test',
@@ -30,7 +30,7 @@ describe('CreateEventUseCase Integration Tests', () => {
       name: 'test',
       description: 'some description',
     });
-    entity = await repository.findById(new Uuid(output.id));
+    entity = await repository.findById(new EventId(output.id));
     expect(output).toStrictEqual({
       id: entity!.eventId.id,
       name: 'test',
@@ -44,7 +44,7 @@ describe('CreateEventUseCase Integration Tests', () => {
       description: 'some description',
       is_active: true,
     });
-    entity = await repository.findById(new Uuid(output.id));
+    entity = await repository.findById(new EventId(output.id));
     expect(output).toStrictEqual({
       id: entity!.eventId.id,
       name: 'test',
@@ -58,7 +58,7 @@ describe('CreateEventUseCase Integration Tests', () => {
       description: 'some description',
       is_active: false,
     });
-    entity = await repository.findById(new Uuid(output.id));
+    entity = await repository.findById(new EventId(output.id));
     expect(output).toStrictEqual({
       id: entity!.eventId.id,
       name: 'test',

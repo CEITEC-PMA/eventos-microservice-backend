@@ -1,6 +1,5 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import { LoadEntityError } from '@core/shared/domain/validators/validation.error';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { EventModel } from './eventModel';
 
 export class EventModelMapper {
@@ -16,7 +15,7 @@ export class EventModelMapper {
 
   static toEntity(model: EventModel): Event {
     const event = new Event({
-      eventId: new Uuid(model.eventId),
+      eventId: new EventId(model.eventId),
       name: model.name,
       description: model.description,
       is_active: model.is_active,

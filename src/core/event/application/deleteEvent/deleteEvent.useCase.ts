@@ -1,6 +1,6 @@
+import { EventId } from '@core/event/domain/eventEntity.aggregate';
 import { IEventRepository } from '@core/event/domain/eventRepository';
 import { IUseCase } from '@core/shared/application/use-case.interface';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 
 export class DeleteEventUseCase
   implements IUseCase<DeleteEventInput, DeleteEventOutput>
@@ -8,7 +8,7 @@ export class DeleteEventUseCase
   constructor(private eventRepo: IEventRepository) {}
 
   async execute(input: DeleteEventInput): Promise<DeleteEventOutput> {
-    const categoryId = new Uuid(input.id);
+    const categoryId = new EventId(input.id);
     await this.eventRepo.delete(categoryId);
   }
 }

@@ -1,10 +1,9 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import {
   EventSearchParams,
   EventSearchResult,
 } from '@core/event/domain/eventRepository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { EventModel } from './eventModel';
 import { EventModelMapper } from './eventModel.mapper';
@@ -26,7 +25,7 @@ describe('EventSequelizeRepository Integration Test', () => {
   });
 
   it('should finds a entity by id', async () => {
-    let entityFound = await repository.findById(new Uuid());
+    let entityFound = await repository.findById(new EventId());
     expect(entityFound).toBeNull();
 
     const entity = Event.fake().aEvent().build();
@@ -62,7 +61,7 @@ describe('EventSequelizeRepository Integration Test', () => {
   });
 
   it('should throw error on delete when a entity not found', async () => {
-    const eventId = new Uuid();
+    const eventId = new EventId();
     await expect(repository.delete(eventId)).rejects.toThrow(
       new NotFoundError(eventId.id, Event),
     );

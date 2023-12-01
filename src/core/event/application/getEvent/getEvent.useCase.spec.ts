@@ -1,10 +1,7 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import {
-  InvalidUuidError,
-  Uuid,
-} from '@core/shared/domain/value-objects/uuid.vo';
+import { InvalidUuidError } from '@core/shared/domain/value-objects/uuid.vo';
 import { GetEventUseCase } from './getEvent.useCase';
 
 describe('GetEventUseCase Unit Tests', () => {
@@ -21,7 +18,7 @@ describe('GetEventUseCase Unit Tests', () => {
       new InvalidUuidError(),
     );
 
-    const eventId = new Uuid();
+    const eventId = new EventId();
     await expect(() => useCase.execute({ id: eventId.id })).rejects.toThrow(
       new NotFoundError(eventId.id, Event),
     );

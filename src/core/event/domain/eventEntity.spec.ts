@@ -1,5 +1,4 @@
-import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
-import { Event } from './eventEntity';
+import { Event, EventId } from './eventEntity.aggregate';
 
 describe('Event Unit Tests', () => {
   beforeEach(() => {
@@ -10,7 +9,7 @@ describe('Event Unit Tests', () => {
   test('constructor of event', () => {
     let event = new Event({ name: 'Movie' });
 
-    expect(event.eventId).toBeInstanceOf(Uuid);
+    expect(event.eventId).toBeInstanceOf(EventId);
     expect(event.name).toBe('Movie');
     expect(event.description).toBeNull();
     expect(event.is_active).toBe(true);
@@ -23,7 +22,7 @@ describe('Event Unit Tests', () => {
       is_active: false,
       createdAt,
     });
-    expect(event.eventId).toBeInstanceOf(Uuid);
+    expect(event.eventId).toBeInstanceOf(EventId);
     expect(event.name).toBe('Movie');
     expect(event.description).toBe('some description');
     expect(event.is_active).toBe(false);
@@ -33,7 +32,7 @@ describe('Event Unit Tests', () => {
       name: 'Movie',
       description: 'other description',
     });
-    expect(event.eventId).toBeInstanceOf(Uuid);
+    expect(event.eventId).toBeInstanceOf(EventId);
     expect(event.name).toBe('Movie');
     expect(event.description).toBe('other description');
     expect(event.is_active).toBe(true);
@@ -43,7 +42,7 @@ describe('Event Unit Tests', () => {
       name: 'Movie',
       is_active: true,
     });
-    expect(event.eventId).toBeInstanceOf(Uuid);
+    expect(event.eventId).toBeInstanceOf(EventId);
     expect(event.name).toBe('Movie');
     expect(event.description).toBeNull();
     expect(event.is_active).toBe(true);
@@ -54,7 +53,7 @@ describe('Event Unit Tests', () => {
       name: 'Movie',
       createdAt,
     });
-    expect(event.eventId).toBeInstanceOf(Uuid);
+    expect(event.eventId).toBeInstanceOf(EventId);
     expect(event.name).toBe('Movie');
     expect(event.description).toBeNull();
     expect(event.is_active).toBe(true);
@@ -66,7 +65,7 @@ describe('Event Unit Tests', () => {
       const event = Event.create({
         name: 'Movie',
       });
-      expect(event.eventId).toBeInstanceOf(Uuid);
+      expect(event.eventId).toBeInstanceOf(EventId);
       expect(event.name).toBe('Movie');
       expect(event.description).toBeNull();
       expect(event.is_active).toBe(true);
@@ -80,7 +79,7 @@ describe('Event Unit Tests', () => {
         name: 'Movie',
         description: 'some description',
       });
-      expect(event.eventId).toBeInstanceOf(Uuid);
+      expect(event.eventId).toBeInstanceOf(EventId);
       expect(event.name).toBe('Movie');
       expect(event.description).toBe('some description');
       expect(event.is_active).toBe(true);
@@ -94,7 +93,7 @@ describe('Event Unit Tests', () => {
         name: 'Movie',
         is_active: false,
       });
-      expect(event.eventId).toBeInstanceOf(Uuid);
+      expect(event.eventId).toBeInstanceOf(EventId);
       expect(event.name).toBe('Movie');
       expect(event.description).toBeNull();
       expect(event.is_active).toBe(false);
@@ -105,11 +104,11 @@ describe('Event Unit Tests', () => {
   });
 
   describe('eventId field', () => {
-    const arrange = [{ id: null }, { id: undefined }, { id: new Uuid() }];
+    const arrange = [{ id: null }, { id: undefined }, { id: new EventId() }];
 
     test.each(arrange)('should be is %j', (props) => {
       const event = new Event(props as any);
-      expect(event.eventId).toBeInstanceOf(Uuid);
+      expect(event.eventId).toBeInstanceOf(EventId);
     });
   });
 

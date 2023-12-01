@@ -1,8 +1,7 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
 import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
 import { UpdateEventUseCase } from './updateEvent.useCase';
 
@@ -18,7 +17,7 @@ describe('UpdateEventUseCase Integration Tests', () => {
   });
 
   it('should throws error when entity not found', async () => {
-    const eventId = new Uuid();
+    const eventId = new EventId();
     await expect(() =>
       useCase.execute({ id: eventId.id, name: 'fake' }),
     ).rejects.toThrow(new NotFoundError(eventId.id, Event));
@@ -148,7 +147,7 @@ describe('UpdateEventUseCase Integration Tests', () => {
         ...('description' in i.input && { description: i.input.description }),
         ...('is_active' in i.input && { is_active: i.input.is_active }),
       });
-      const entityUpdated = await repository.findById(new Uuid(i.input.id));
+      const entityUpdated = await repository.findById(new EventId(i.input.id));
       expect(output).toStrictEqual({
         id: entity.eventId.id,
         name: i.expected.name,

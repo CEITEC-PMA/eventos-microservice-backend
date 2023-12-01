@@ -5,9 +5,8 @@ import { DeleteEventUseCase } from '@core/event/application/deleteEvent/deleteEv
 import { GetEventUseCase } from '@core/event/application/getEvent/getEvent.useCase';
 import { ListEventsUseCase } from '@core/event/application/listEvent/listEvents.useCase';
 import { UpdateEventUseCase } from '@core/event/application/updateEvent/updateEvent.useCase';
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import { IEventRepository } from '@core/event/domain/eventRepository';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule } from '../config-module/config.module';
 import { DatabaseModule } from '../database-module/database.module';
@@ -50,7 +49,7 @@ describe('EventsController Integration Tests', () => {
       'when body is $send_data',
       async ({ send_data, expected }) => {
         const presenter = await controller.create(send_data);
-        const entity = await repository.findById(new Uuid(presenter.id));
+        const entity = await repository.findById(new EventId(presenter.id));
         expect(entity!.toJSON()).toStrictEqual({
           eventId: presenter.id,
           createdAt: presenter.createdAt,
@@ -75,7 +74,7 @@ describe('EventsController Integration Tests', () => {
       'when body is $send_data',
       async ({ send_data, expected }) => {
         const presenter = await controller.update(event.eventId.id, send_data);
-        const entity = await repository.findById(new Uuid(presenter.id));
+        const entity = await repository.findById(new EventId(presenter.id));
         expect(entity!.toJSON()).toStrictEqual({
           eventId: presenter.id,
           createdAt: presenter.createdAt,

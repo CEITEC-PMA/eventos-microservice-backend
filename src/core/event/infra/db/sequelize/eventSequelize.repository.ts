@@ -1,4 +1,4 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event, EventId } from '@core/event/domain/eventEntity.aggregate';
 import {
   EventSearchParams,
   EventSearchResult,
@@ -7,7 +7,6 @@ import {
 import { InvalidArgumentError } from '@core/shared/domain/errors/invalid-argument.error';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import { SortDirection } from '@core/shared/domain/repository/search-params';
-import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Op, literal } from 'sequelize';
 import { EventModel } from './eventModel';
 import { EventModelMapper } from './eventModel.mapper';
@@ -47,7 +46,7 @@ export class EventSequelizeRepository implements IEventRepository {
     }
   }
 
-  async delete(eventId: Uuid): Promise<void> {
+  async delete(eventId: EventId): Promise<void> {
     const id = eventId.id;
 
     const affectedRows = await this.eventModel.destroy({
@@ -59,7 +58,7 @@ export class EventSequelizeRepository implements IEventRepository {
     }
   }
 
-  async findByIds(ids: Uuid[]): Promise<Event[]> {
+  async findByIds(ids: EventId[]): Promise<Event[]> {
     const models = await this.eventModel.findAll({
       where: {
         eventId: {
@@ -71,8 +70,8 @@ export class EventSequelizeRepository implements IEventRepository {
   }
 
   async existsById(
-    ids: Uuid[],
-  ): Promise<{ exists: Uuid[]; not_exists: Uuid[] }> {
+    ids: EventId[],
+  ): Promise<{ exists: EventId[]; not_exists: EventId[] }> {
     if (!ids.length) {
       throw new InvalidArgumentError(
         'ids must be an array with at least one element',
@@ -87,7 +86,7 @@ export class EventSequelizeRepository implements IEventRepository {
         },
       },
     });
-    const existsEventIds = existsEventModels.map((m) => new Uuid(m.eventId));
+    const existsEventIds = existsEventModels.map((m) => new EventId(m.eventId));
     const notExistsCategoryIds = ids.filter(
       (id) => !existsEventIds.some((e) => e.equals(id)),
     );
@@ -97,7 +96,7 @@ export class EventSequelizeRepository implements IEventRepository {
     };
   }
 
-  async findById(entity_id: Uuid): Promise<Event | null> {
+  async findById(entity_id: EventId): Promise<Event | null> {
     const model = await this.eventModel.findByPk(entity_id.id);
 
     return model ? EventModelMapper.toEntity(model) : null;
