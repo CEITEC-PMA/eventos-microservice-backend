@@ -1,7 +1,7 @@
 import { Notification } from '@core/shared/domain/validators/notification';
 import { MaxLength } from 'class-validator';
 import { ClassValidatorFields } from '../../shared/domain/validators/class-validator-fields';
-import { Event } from './eventEntity';
+import { Event } from './eventEntity.aggregate';
 
 class EventRules {
   @MaxLength(255, { groups: ['name'] })

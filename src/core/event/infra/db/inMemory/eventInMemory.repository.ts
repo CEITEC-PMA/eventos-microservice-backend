@@ -5,7 +5,7 @@ import {
 import { SortDirection } from '../../../../shared/domain/repository/search-params';
 import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 import { InMemorySearchableRepository } from '../../../../shared/infra/db/in-memory/in-memory.repository';
-import { Event } from '../../../domain/eventEntity';
+import { Event } from '../../../domain/eventEntity.aggregate';
 
 export class EventInMemoryRepository
   extends InMemorySearchableRepository<Event, Uuid>

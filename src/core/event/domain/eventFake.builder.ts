@@ -1,6 +1,6 @@
 import { Uuid } from '@core/shared/domain/value-objects/uuid.vo';
 import { Chance } from 'chance';
-import { Event } from './eventEntity';
+import { Event } from './eventEntity.aggregate';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
