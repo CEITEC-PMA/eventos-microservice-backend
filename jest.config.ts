@@ -213,6 +213,7 @@ const config: Config = {
     'shared-module/testing',
     'validator-rules.ts',
     '-fixture.ts',
+    '.fixture.ts',
     '.input.ts',
     '.d.ts',
   ],
