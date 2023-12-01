@@ -1,7 +1,7 @@
-import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { EventModel } from '../../core/event/infra/db/sequelize/eventModel';
 import { CONFIG_SCHEMA_TYPE } from '../config-module/config.module';
 
 const models = [EventModel];
