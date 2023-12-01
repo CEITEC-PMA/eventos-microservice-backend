@@ -1,4 +1,4 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event } from '@core/event/domain/eventEntity.aggregate';
 import { EventOutputMapper } from './eventOutput';
 
 describe('EventOutputMapper Unit Tests', () => {

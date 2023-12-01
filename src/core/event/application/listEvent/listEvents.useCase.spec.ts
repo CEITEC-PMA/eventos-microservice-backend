@@ -1,4 +1,4 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event } from '@core/event/domain/eventEntity.aggregate';
 import { EventSearchResult } from '@core/event/domain/eventRepository';
 import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
 import { EventOutputMapper } from '../commom/eventOutput';

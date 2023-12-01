@@ -1,4 +1,4 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event } from '@core/event/domain/eventEntity.aggregate';
 import { IEventRepository } from '@core/event/domain/eventRepository';
 import { IUseCase } from '@core/shared/application/use-case.interface';
 import { EntityValidationError } from '@core/shared/domain/validators/validation.error';

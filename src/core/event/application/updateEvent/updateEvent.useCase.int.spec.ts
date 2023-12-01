@@ -1,4 +1,4 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event } from '@core/event/domain/eventEntity.aggregate';
 import { EventInMemoryRepository } from '@core/event/infra/db/inMemory/eventInMemory.repository';
 import { NotFoundError } from '@core/shared/domain/errors/not-found.error';
 import {

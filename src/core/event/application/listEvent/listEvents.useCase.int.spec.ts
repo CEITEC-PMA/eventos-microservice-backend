@@ -1,4 +1,4 @@
-import { Event } from '@core/event/domain/eventEntity';
+import { Event } from '@core/event/domain/eventEntity.aggregate';
 import { EventModel } from '@core/event/infra/db/sequelize/eventModel';
 import { EventSequelizeRepository } from '@core/event/infra/db/sequelize/eventSequelize.repository';
 import { setupSequelize } from '@core/shared/infra/testing/helpers';
