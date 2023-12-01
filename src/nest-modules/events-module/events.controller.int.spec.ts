@@ -19,7 +19,7 @@ import {
   CreateEventFixture,
   ListEventsFixture,
   UpdateEventFixture,
-} from './testing/category-fixture';
+} from './testing/event.fixture';
 
 describe('EventsController Integration Tests', () => {
   let controller: EventsController;
