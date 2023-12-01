@@ -120,8 +120,7 @@ export class EventSequelizeRepository implements IEventRepository {
         },
       }),
       ...(props.sort && this.sortableFields.includes(props.sort)
-        ? //? { order: [[props.sort, props.sort_dir]] }
-          { order: this.formatSort(props.sort, props.sort_dir!) }
+        ? { order: this.formatSort(props.sort, props.sort_dir!) }
         : { order: [['createdAt', 'desc']] }),
       offset,
       limit,
